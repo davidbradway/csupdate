@@ -23,7 +23,7 @@ def main():
     if date_string != old_string:
         print('New Streets!', date_string)
 
-        if config.api_key != 'changeme':
+        if config.api_key != 'replaceme':
             pb = Pushbullet(config.api_key)
             pb.push_note('New Streets!', date_string)
 
