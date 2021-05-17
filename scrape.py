@@ -15,17 +15,17 @@ def main():
     else:
         old_string = ''
 
-    url = 'https://citystrides.com/cities/171335'
-    page = requests.get(url)
+    page = requests.get(config.url)
     soup = BeautifulSoup(page.content, 'html.parser')
-    results = soup.find(class_="mt-1")
+    results = soup.find(class_=config.target_class)
     date_string = results.get_text()
 
     if date_string != old_string:
         print('New Streets!', date_string)
 
-        pb = Pushbullet(config.api_key)
-        pb.push_note("New Streets!", date_string)
+        if config.api_key != 'changeme':
+            pb = Pushbullet(config.api_key)
+            pb.push_note('New Streets!', date_string)
 
         with open(cache_file, 'wb') as cache_handle:
             print("saving result to cache '%s'" % cache_file)
